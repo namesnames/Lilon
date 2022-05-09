@@ -24,6 +24,7 @@ import eyed3
 
 print("Insert the keyword")
 
+
 keyword=input("")
 url='https://www.youtube.com/results?search_query={}'.format(keyword)
 driver = webdriver.Chrome(executable_path='C:\Python27\chromedriver.exe')
@@ -33,14 +34,17 @@ driver.get(url)
 soup = BeautifulSoup(driver.page_source, 'html.parser')
 driver.close()
 
+# 해당 영상에 대한 파싱 작업을 통해, 여러 태그 중에서 원하는 특정 정보를 추출해 낸다.
 name = soup.select('a#video-title')
 video_url = soup.select('a#video-title')
 view = soup.select('a#video-title')
 
+# name, url, view 정보를 저장할 리스트 생성
 name_list = []
 url_list = []
 view_list = []
 
+# 해당 비디오(영상)으로 부터 추출해온 정보를 리스트에 저장
 for i in range(len(name)):
     name_list.append(name[i].text.strip())
     view_list.append(view[i].get('aria-label').split()[-1])
