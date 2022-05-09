@@ -58,12 +58,15 @@ youtubeDic = {
 }
 
 
-print(name_list[0])
+print(name_list[0]) # name_list에 담긴 상위 3개 영상의 이름을 출력
 print(name_list[1])
 print(name_list[2])
-print('옵션 1,2,3 을 선택하세요')
-o=input()
-if(o=='1'):
+print('옵션 1,2,3 을 선택하세요') 
+o=input()   #옵션 1,2,3 중 하나 선택
+
+
+
+if(o=='1'):        # 입력값에 해당하는 링크 정보를 url_list에서 꺼내 변수 link에 저장
     link=url_list[0]
 elif(o=='2'):
     link=url_list[1]
@@ -75,12 +78,12 @@ else:      #외에 것을 입력하면 최상단의 영상 다운
 #link = input ("") # 또는 아래와 같이 직접 유튜브 동영상 주소를 파이썬 스크립트 파일에 복사
 
 
-ydl=youtube_dl.YoutubeDL({})
+ydl=youtube_dl.YoutubeDL({}) # 주어진옵션에 따라 파일 다운로더 객체 생성 (YoutubeDL 객체 생성)
 with ydl:
-    video=ydl.extract_info(link,download=False)
-print('{}--{}--{}'.format(video['artist'],video['track'],video['album']))
+    video=ydl.extract_info(link,download=False)  # 해당 링크에서 정보를 추출하여 video에 저장 (download=False로 다시 음원이 다운되는 것을 방지함)
+print('{}--{}--{}'.format(video['artist'],video['track'],video['album'])) # video 객체에 저장된 노래의 정보 중, 가수, 제목, 앨범명을 순서대로 출력
 
-a=video['track']
+a=video['track'] 
 
 
 
