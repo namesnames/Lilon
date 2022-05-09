@@ -1,13 +1,17 @@
-from __future__ import unicode_literals
+from __future__ import unicode_literals 
+#파이썬 3에서 쓰던 문법을 파이썬2에서 쓸수있게 해줌
+#from 모듈 import 이름 (from 파일명(라이브러리) import 함수이름)
 
-from selenium import webdriver
-import pandas as pd
+from selenium import webdriver  #selenuim패키지에서 webdriver
+#유튜브는 동적페이지 라서 사용자의 행동에 따라 서버에서 정보가 바뀜
+#따라서 selenium 을 사용해야함
 from selenium.webdriver.common.keys import Keys
 import time
 
 
 
 from bs4 import BeautifulSoup
+#bs4 라이브러리에서 Beautifulsoup 사용 선언
 import lxml
 import requests 
 
@@ -49,7 +53,6 @@ youtubeDic = {
     '조회수': view_list
 }
 
-youtubeDf = pd.DataFrame(youtubeDic)
 
 print(name_list[0])
 print(name_list[1])
