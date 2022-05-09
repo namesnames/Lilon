@@ -80,39 +80,39 @@ a=video['track']
 
 
 
+# 옵션 지정
 ydl_opts = {
 
-    'format': 'bestaudio/best',
+    'format': 'bestaudio/best',   # 최고음질 오디오
 
-    'postprocessors': [{
+    'postprocessors': [{       # 후처리 프로세서 : 후처리적인 계산이나 편집, 교환을 행함
 
-        'key': 'FFmpegExtractAudio',
+        'key': 'FFmpegExtractAudio',   # 키 : FFmpeg를 사용
 
-        'preferredcodec': 'mp3',
+        'preferredcodec': 'mp3',      # .mp3 형태로 변환
+         
 
-        'preferredquality': '320',
+        'preferredquality': '320',   # 품질 : 320k
 
     }],
-    'outtmpl':f"{os.getcwd()}/{a}.m4a" 
-    #파이썬 문자열안에 변수를 대치시키는 방법 f 와 {} 이용
-}
+    
+    'outtmpl':f"{os.getcwd()}/{a}.m4a"   #파이썬 문자열안에 변수를 대치시키는 방법 f 와 {} 이용
 
+# YOUTUBE에서 검색한 영상을 .m4a(영상) 파일을 다운로드 하고 .mp3(오디오) 파일로 변환
+}
 
 
 
 with youtube_dl.YoutubeDL(ydl_opts) as ydl:
    
-    ydl.download([link])
+    ydl.download([link])    # YOUTUBE에서 검색한 결과의 주소를 통해 youtube-dl을 이용하여 다운로드
 
-
-
-audiofile = eyed3.load(f"{a}.mp3")
-audiofile.initTag(version=(2,3,0))
-audiofile.tag.artist = video['artist']
-audiofile.tag.album = video['album']
-audiofile.tag.title = video['track']
-audiofile.tag.save()
-
+audiofile = eyed3.load(f"{a}.mp3")      # 다운로드 완료한 .mp3 파일을 불러옴
+audiofile.initTag(version=(2,3,0))      # eyed3의 버전
+audiofile.tag.artist = video['artist']  # eyed3를 사용하여 .mp3 파일의 artist 속성 추가 
+audiofile.tag.album = video['album']    # eyed3를 사용하여 .mp3 파일의 album 속성 추가 
+audiofile.tag.title = video['track']    # eyed3를 사용하여 .mp3 파일의 track 속성 추가 
+audiofile.tag.save()                    # 추가된 속성 tag 저장
 
 
 
