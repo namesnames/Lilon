@@ -26,7 +26,9 @@ print("Insert the keyword")
 
 
 keyword=input("")
-url='https://www.youtube.com/results?search_query={}'.format(keyword)
+#url='https://www.youtube.com/results?search_query={}'.format(keyword)
+url=f'https://www.youtube.com/results?search_query={keyword}'
+
 driver = webdriver.Chrome(executable_path='C:\Python27\chromedriver.exe')
 
 # chromedriver를 본인의 크롬 버전에 맞춰 설치하고 설치한 경로를 path에 써주세요
@@ -122,33 +124,3 @@ audiofile.tag.title = video['track']    # eyed3를 사용하여 .mp3 파일의 t
 audiofile.tag.save()                    # 추가된 속성 tag 저장
 
 
-
-
-
-"""
-def get_song_info(link):
-    response=requests.get(link)
-    soup=BeautifulSoup(response.text,'lxml') #html 데이터 가져오기
-    
-    song_info['title']=soup.find('div',id='content')
-    result=soup.find('div',id='content')
-    print(result)
-    
-   # lis=soup.find_all("ytd-metadata-row-container-renderer","sticky.style-scope.ytd-video-secondary-info-renderer")
-
- for i in lis:
-        global song_info
-        song_info["title"]=i.find("div",id="content")
-        print(i.find("div",id="content"))
-"""
-"""
-ydl=youtube_dl.YoutubeDL({})
-with ydl:
-    video=ydl.extract_info(link,download=False)
-print('{}--{}--{}'.format(video['artist'],video['track'],video['album']))
-print(video['artist'])
-print(video['track'])
-print(video['album'])
-
-
-"""
