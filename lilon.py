@@ -20,6 +20,9 @@ import youtube_dl
 import os
 import eyed3
 
+import get_info
+
+
 #headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'}
 
 print("Insert the keyword")
@@ -29,55 +32,73 @@ keyword=input("")
 #url='https://www.youtube.com/results?search_query={}'.format(keyword)
 url=f'https://www.youtube.com/results?search_query={keyword}'
 
-driver = webdriver.Chrome(executable_path='C:\Python27\chromedriver.exe')
+# driver = webdriver.Chrome(executable_path='C:\Python27\chromedriver.exe')
 
-# chromedriver를 본인의 크롬 버전에 맞춰 설치하고 설치한 경로를 path에 써주세요
-driver.get(url)
-soup = BeautifulSoup(driver.page_source, 'html.parser')
-driver.close()
+# # chromedriver를 본인의 크롬 버전에 맞춰 설치하고 설치한 경로를 path에 써주세요
+# driver.get(url)
+# soup = BeautifulSoup(driver.page_source, 'html.parser')
+# driver.close()
 
-# 해당 영상에 대한 파싱 작업을 통해, 여러 태그 중에서 원하는 특정 정보를 추출해 낸다.
-name = soup.select('a#video-title')
-video_url = soup.select('a#video-title')
-view = soup.select('a#video-title')
+# # 해당 영상에 대한 파싱 작업을 통해, 여러 태그 중에서 원하는 특정 정보를 추출해 낸다.
+# name = soup.select('a#video-title')
+# video_url = soup.select('a#video-title')
+# view = soup.select('a#video-title')
 
-# name, url, view 정보를 저장할 리스트 생성
-name_list = []
-url_list = []
-view_list = []
+# # name, url, view 정보를 저장할 리스트 생성
+# name_list = []
+# url_list = []
+# view_list = []
 
-# 해당 비디오(영상)으로 부터 추출해온 정보를 리스트에 저장
-for i in range(len(name)):
-    name_list.append(name[i].text.strip())
-    view_list.append(view[i].get('aria-label').split()[-1])
-for i in video_url:
-    url_list.append('{}{}'.format('https://www.youtube.com',i.get('href')))
+# # 해당 비디오(영상)으로 부터 추출해온 정보를 리스트에 저장
+# for i in range(len(name)):
+#     name_list.append(name[i].text.strip())
+#     view_list.append(view[i].get('aria-label').split()[-1])
+# for i in video_url:
+#     url_list.append('{}{}'.format('https://www.youtube.com',i.get('href')))
     
-youtubeDic = {
-    '제목': name_list,
-    '주소': url_list,
-    '조회수': view_list
-}
+# youtubeDic = {
+#     '제목': name_list,
+#     '주소': url_list,
+#     '조회수': view_list
+# }
 
 
-print(name_list[0]) # name_list에 담긴 상위 3개 영상의 이름을 출력
-print(name_list[1])
-print(name_list[2])
-print('옵션 1,2,3 을 선택하세요') 
-o=input()   #옵션 1,2,3 중 하나 선택
+# print(name_list[0]) # name_list에 담긴 상위 3개 영상의 이름을 출력
+# print(name_list[1])
+# print(name_list[2])
+# print('옵션 1,2,3 을 선택하세요') 
+# o=input()   #옵션 1,2,3 중 하나 선택
 
 
 
-if(o=='1'):        # 입력값에 해당하는 링크 정보를 url_list에서 꺼내 변수 link에 저장
-    link=url_list[0]
-elif(o=='2'):
-    link=url_list[1]
-elif(o=='3'):
-    link=url_list[2] 
-else:      #외에 것을 입력하면 최상단의 영상 다운
-    link=url_list[0]
+# if(o=='1'):        # 입력값에 해당하는 링크 정보를 url_list에서 꺼내 변수 link에 저장
+#     link=url_list[0]
+# elif(o=='2'):
+#     link=url_list[1]
+# elif(o=='3'):
+#     link=url_list[2] 
+# else:      #외에 것을 입력하면 최상단의 영상 다운
+#     link=url_list[0]
     
-#link = input ("") # 또는 아래와 같이 직접 유튜브 동영상 주소를 파이썬 스크립트 파일에 복사
+
+sth = get_info.getVideo()
+sth.getURL(url)
+names, urls = sth.getINFO()
+
+
+
+print(names[0])
+print(names[1])
+print(names[2])
+
+link = sth.selection(urls)
+
+
+
+
+
+
+# link = input ("") # 또는 아래와 같이 직접 유튜브 동영상 주소를 파이썬 스크립트 파일에 복사
 
 
 ydl=youtube_dl.YoutubeDL({}) # 주어진옵션에 따라 파일 다운로더 객체 생성 (YoutubeDL 객체 생성)
