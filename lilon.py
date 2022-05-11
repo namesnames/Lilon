@@ -21,6 +21,8 @@ import os
 import eyed3
 
 import get_info
+import Download
+
 
 
 #headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/100.0.4896.127 Safari/537.36'}
@@ -96,52 +98,57 @@ link = sth.selection(urls)
 
 
 
-
-
 # link = input ("") # 또는 아래와 같이 직접 유튜브 동영상 주소를 파이썬 스크립트 파일에 복사
 
 
-ydl=youtube_dl.YoutubeDL({}) # 주어진옵션에 따라 파일 다운로더 객체 생성 (YoutubeDL 객체 생성)
-with ydl:
-    video=ydl.extract_info(link,download=False)  # 해당 링크에서 정보를 추출하여 video에 저장 (download=False로 다시 음원이 다운되는 것을 방지함)
-print('{}--{}--{}'.format(video['artist'],video['track'],video['album'])) # video 객체에 저장된 노래의 정보 중, 가수, 제목, 앨범명을 순서대로 출력
+# ydl=youtube_dl.YoutubeDL({}) # 주어진옵션에 따라 파일 다운로더 객체 생성 (YoutubeDL 객체 생성)
+# with ydl:
+#     video=ydl.extract_info(link,download=False)  # 해당 링크에서 정보를 추출하여 video에 저장 (download=False로 다시 음원이 다운되는 것을 방지함)
+# print('{}--{}--{}'.format(video['artist'],video['track'],video['album'])) # video 객체에 저장된 노래의 정보 중, 가수, 제목, 앨범명을 순서대로 출력
 
-a=video['track'] 
+# a=video['track'] 
 
 
 
-# 옵션 지정
-ydl_opts = {
+# # 옵션 지정
+# ydl_opts = {
 
-    'format': 'bestaudio/best',   # 최고음질 오디오
+#     'format': 'bestaudio/best',   # 최고음질 오디오
 
-    'postprocessors': [{       # 후처리 프로세서 : 후처리적인 계산이나 편집, 교환을 행함
+#     'postprocessors': [{       # 후처리 프로세서 : 후처리적인 계산이나 편집, 교환을 행함
 
-        'key': 'FFmpegExtractAudio',   # 키 : FFmpeg를 사용
+#         'key': 'FFmpegExtractAudio',   # 키 : FFmpeg를 사용
 
-        'preferredcodec': 'mp3',      # .mp3 형태로 변환
+#         'preferredcodec': 'mp3',      # .mp3 형태로 변환
          
 
-        'preferredquality': '320',   # 품질 : 320k
+#         'preferredquality': '320',   # 품질 : 320k
 
-    }],
+#     }],
     
-    'outtmpl':f"{os.getcwd()}/{a}.m4a"   #파이썬 문자열안에 변수를 대치시키는 방법 f 와 {} 이용
+#     'outtmpl':f"{os.getcwd()}/{a}.m4a"   #파이썬 문자열안에 변수를 대치시키는 방법 f 와 {} 이용
 
-# YOUTUBE에서 검색한 영상을 .m4a(영상) 파일을 다운로드 하고 .mp3(오디오) 파일로 변환
-}
+# # YOUTUBE에서 검색한 영상을 .m4a(영상) 파일을 다운로드 하고 .mp3(오디오) 파일로 변환
+# }
 
 
 
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+# with youtube_dl.YoutubeDL(ydl_opts) as ydl:
    
-    ydl.download([link])    # YOUTUBE에서 검색한 결과의 주소를 통해 youtube-dl을 이용하여 다운로드
+#     ydl.download([link])    # YOUTUBE에서 검색한 결과의 주소를 통해 youtube-dl을 이용하여 다운로드
 
-audiofile = eyed3.load(f"{a}.mp3")      # 다운로드 완료한 .mp3 파일을 불러옴
-audiofile.initTag(version=(2,3,0))      # eyed3의 버전
-audiofile.tag.artist = video['artist']  # eyed3를 사용하여 .mp3 파일의 artist 속성 추가 
-audiofile.tag.album = video['album']    # eyed3를 사용하여 .mp3 파일의 album 속성 추가 
-audiofile.tag.title = video['track']    # eyed3를 사용하여 .mp3 파일의 track 속성 추가 
-audiofile.tag.save()                    # 추가된 속성 tag 저장
+# audiofile = eyed3.load(f"{a}.mp3")      # 다운로드 완료한 .mp3 파일을 불러옴
+# audiofile.initTag(version=(2,3,0))      # eyed3의 버전
+# audiofile.tag.artist = video['artist']  # eyed3를 사용하여 .mp3 파일의 artist 속성 추가 
+# audiofile.tag.album = video['album']    # eyed3를 사용하여 .mp3 파일의 album 속성 추가 
+# audiofile.tag.title = video['track']    # eyed3를 사용하여 .mp3 파일의 track 속성 추가 
+# audiofile.tag.save()                    # 추가된 속성 tag 저장
 
+
+
+sth2 = Download.download_mp3()
+A = sth2.extractInfo(link)
+sth2.setOpition(A)
+audio = sth2.download(A,link)
+sth2.tags(audio)
 
