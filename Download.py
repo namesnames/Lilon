@@ -25,12 +25,12 @@ import get_info
 
 class download_mp3():
 
-    def extractInfo(self,lin):
+    def extractInfo(self,lin): #링크를 넣으면 제목을 리턴
         ydl=youtube_dl.YoutubeDL({}) # 주어진옵션에 따라 파일 다운로더 객체 생성 (YoutubeDL 객체 생성)
 
 
         with ydl:
-            global video
+            global video #다른 함수에도 써야해서 전역변수 처리
             video=ydl.extract_info(lin,download=False)  # 해당 링크에서 정보를 추출하여 video에 저장 (download=False로 다시 음원이 다운되는 것을 방지함)
 
         # if(video['track'] == NULL):
@@ -41,8 +41,6 @@ class download_mp3():
         else:
             a = input("youtube에서 해당 노래에 저장된 track 정보가 없습니다. 노래의 이름을 직접 입력해주세요!   ")
 
-
-        
         return a
 
             

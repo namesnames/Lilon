@@ -1,6 +1,6 @@
 from __future__ import unicode_literals
 from typing import Type
-from unicodedata import name 
+#from unicodedata import name 
 #파이썬 3에서 쓰던 문법을 파이썬2에서 쓸수있게 해줌
 #from 모듈 import 이름 (from 파일명(라이브러리) import 함수이름)
 
@@ -12,21 +12,16 @@ import time
 
 from bs4 import BeautifulSoup
 #bs4 라이브러리에서 Beautifulsoup 사용 선언
-import lxml
-import requests 
-
-import youtube_dl
-
-import os
-import eyed3
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+#from webdriver_manager.chrome import ChromeDriverManager
 
+from selenium.webdriver.chrome.options import Options
 
-driver = webdriver.Chrome(r"C:\Users\study\Documents\secondGrade\codeLION\youtube_api\be-hackathon-Lilion\chromedriver.exe")
-
+# options=webdriver.ChromeOptions()
+# options.add_experimental_option('excludeSwithces',['enable-logging'])
+driver = webdriver.Chrome(executable_path='C:\Python27\chromedriver.exe')
 
 
 class getVideo():
